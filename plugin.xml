@@ -3,7 +3,7 @@
         xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-bazaar"
-        version="1.0.3">
+        version="1.0.4">
 
     <name>Cafebazaar Intents and Services</name>
     <description>This plugin helps peoples that need use Cafebazaar.ir Market intents and update check service in cordova projects</description>

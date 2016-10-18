@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-bazaar",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "This plugin helps peoples that need use Cafebazaar.ir Market intents and update check service in cordova projects",
   "cordova": {
     "id": "cordova-plugin-bazaar",
@@ -36,7 +36,6 @@
     "url": "https://github.com/ivir3zam/bazaar/issues"
   },
   "homepage": "https://github.com/ivir3zam/bazaar#readme",
-  "readme": "Cafebazaar Intents and Services\n===============================\n\nCafebazaar Intents and Services Plugin for Cordova 3.0+ Android\n\nThis plugin in based on documentation from https://cafebazaar.ir/developers/docs/?l=en\n\nInstallation\n===========\n\nFor Cordova CLI -\n`cordova plugin add https://github.com/ivir3zam/bazaar.git`\n\nFor PhoneGap Build -\nAdd `<gap:plugin name=\"cordova-plugin-bazaar\" version=\"1.0.0\" />` to config.xml\n\nUsages (in javascript anywhere in your project)\n===============================================\n\n- Bazaar.rate(\"com.your.package\");\n- Bazaar.show(\"com.your.package\");\n- Bazaar.developer(\"yourDeveloperId\");\n",
   "readmeFilename": "README.md",
   "_id": "cordova-plugin-bazaar@1.0.0",
   "_shasum": "d9f874e7125561aac2fc6048c4b570aebeb67331",
