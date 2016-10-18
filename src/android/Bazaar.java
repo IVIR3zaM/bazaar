@@ -45,10 +45,26 @@ import com.farsitel.bazaar.IUpdateCheckService;
 public class Bazaar extends CordovaPlugin {
     IUpdateCheckService service;
     UpdateServiceConnection connection;
+    CallbackContext callback;
+    String packageName;
+    Activity activity;
 
     class UpdateServiceConnection implements ServiceConnection {
         public void onServiceConnected(ComponentName name, IBinder boundService) {
             service = IUpdateCheckService.Stub.asInterface((IBinder) boundService);
+            long vCode = 0;
+            try {
+                vCode = service.getVersionCode(packageName);
+            } catch (Exception e) {
+                callback.error(e.getMessage());
+            }
+
+            if (vCode != 0) {
+                callback.success(Long.toString(vCode));
+            }
+
+            activity.unbindService(connection);
+            connection = null;
         }
 
         public void onServiceDisconnected(ComponentName name) {
@@ -60,31 +76,17 @@ public class Bazaar extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals("update")) {
             try{
-                String packageName = args.getString(0);
+                activity = this.cordova.getActivity();
+                callback = callbackContext;
+                packageName = args.getString(0);
                 connection = new UpdateServiceConnection();
                 Intent intent = new Intent("com.farsitel.bazaar.service.UpdateCheckService.BIND");
                 intent.setPackage("com.farsitel.bazaar");
-                boolean ret = this.cordova.getActivity().bindService(intent, connection, Context.BIND_AUTO_CREATE);
+                boolean ret = activity.bindService(intent, connection, Context.BIND_AUTO_CREATE);
                 if (ret == false) {
                     callbackContext.error("Intent not bind");
                     return false;
                 }
-
-                if (service == null) {
-                    callbackContext.error("Bazaar service destroyed");
-                    return false;
-                }
-
-                long vCode = 0;
-                try {
-                    vCode = service.getVersionCode(packageName);
-                } catch (Exception e) {
-                    callbackContext.error(e.getMessage());
-                    return false;
-                }
-                callbackContext.success(Long.toString(vCode));
-                this.cordova.getActivity().unbindService(connection);
-                connection = null;
                 return true;
             } catch (JSONException e) {
                 callbackContext.error(e.getMessage());
@@ -94,7 +96,7 @@ public class Bazaar extends CordovaPlugin {
 
         if (action.equals("show")) {
             try{
-                String packageName = args.getString(0);
+                packageName = args.getString(0);
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("bazaar://details?id=" + packageName));
                 intent.setPackage("com.farsitel.bazaar");
@@ -109,7 +111,7 @@ public class Bazaar extends CordovaPlugin {
 
         if (action.equals("rate")) {
             try{
-                String packageName = args.getString(0);
+                packageName = args.getString(0);
                 Intent intent = new Intent(Intent.ACTION_EDIT);
                 intent.setData(Uri.parse("bazaar://details?id=" + packageName));
                 intent.setPackage("com.farsitel.bazaar");
@@ -124,9 +126,9 @@ public class Bazaar extends CordovaPlugin {
 
         if (action.equals("developer")) {
             try{
-                String developerId = args.getString(0);
+                packageName = args.getString(0);
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("bazaar://collection?slug=by_author&aid=" + developerId));
+                intent.setData(Uri.parse("bazaar://collection?slug=by_author&aid=" + packageName));
                 intent.setPackage("com.farsitel.bazaar");
                 this.cordova.getActivity().startActivity(intent);
                 callbackContext.success("Rate Intent Sent");
