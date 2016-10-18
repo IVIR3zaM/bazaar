@@ -12,7 +12,7 @@ For Cordova CLI -
 `cordova plugin add cordova-plugin-bazaar`
 
 For PhoneGap Build -
-Add `<gap:plugin name="cordova-plugin-bazaar" version="1.0.0" />` to config.xml
+Add `<gap:plugin name="cordova-plugin-bazaar" version="1.0.5" />` to config.xml
 
 Usages (in javascript anywhere in your project)
 ===============================================
@@ -20,4 +20,4 @@ Usages (in javascript anywhere in your project)
 - Bazaar.rate("com.your.package", successCallback, errorCallback);
 - Bazaar.show("com.your.package", successCallback, errorCallback);
 - Bazaar.developer("yourDeveloperId", successCallback, errorCallback);
-- Bazaar.update("yourDeveloperId", function(result){ if (result > 0) {/* has update */} else { /* no update */} }, errorCallback);
+- Bazaar.update("com.your.package", function(result){ if (result > 0) {/* has update \*/} else { /* no update \*/} }, errorCallback);
