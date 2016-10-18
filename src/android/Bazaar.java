@@ -55,14 +55,10 @@ public class Bazaar extends CordovaPlugin {
             long vCode = 0;
             try {
                 vCode = service.getVersionCode(packageName);
+                callback.success(Long.toString(vCode));
             } catch (Exception e) {
                 callback.error(e.getMessage());
             }
-
-            if (vCode != 0) {
-                callback.success(Long.toString(vCode));
-            }
-
             activity.unbindService(connection);
             connection = null;
         }

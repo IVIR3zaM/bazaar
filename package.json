@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-bazaar",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "This plugin helps peoples that need use Cafebazaar.ir Market intents and update check service in cordova projects",
   "cordova": {
     "id": "cordova-plugin-bazaar",
